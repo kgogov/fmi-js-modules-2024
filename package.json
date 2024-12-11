@@ -1,0 +1,16 @@
+{
+    "name": "fmi-fe-js--modules-2024",
+    "version": "1.0.0",
+    "description": "JavaScript course by SAP Labs Bulgaria for FMI 2024",
+    "main": "index.html",
+    "author": "Konstantin Gogov",
+    "license": "MIT",
+    "scripts": {
+        "start": "http-server -p 8000 -c-1"
+    },
+    "dependencies": {
+        "http-server": "^14.1.1",
+        "reveal.js": "^5.1.0",
+        "reveal.js-copycode": "^1.2.0"
+    }
+}

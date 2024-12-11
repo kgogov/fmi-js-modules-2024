@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FMI Frontend - JavaScript Modules</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./resources/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./resources/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./resources/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./resources/favicon/site.webmanifest">
+
+    <link rel="stylesheet" href="./node_modules/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="./node_modules/reveal.js/dist/reveal.css">
+
+    <link rel="stylesheet" href="./node_modules/reveal.js/dist/theme/white-contrast.css">
+    <link rel="stylesheet" href="./node_modules/reveal.js/plugin/highlight/zenburn.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Заглавие -->
+            <section>
+                <h2>Frontend Web Development</h2>
+                <h3>JavaScript - Modules</h3>
+            </section>
+
+            <!-- Съдържание -->
+            <section>
+                <h3>Съдържание</h3>
+                <ul>
+                    <li>Въведение в модулите</li>
+                    <li>Типове модули в JavaScript</li>
+                    <li>ES6 модули</li>
+                    <li>Динамичен импорт</li>
+                    <li>Сравнение с CommonJS</li>
+                    <li>Заключение и препоръки</li>
+                </ul>
+            </section>
+
+            <!-- Въведение в модулите -->
+            <section>
+                <section>
+                    <h4>Какво е модул?</h4>
+                    <p>Модулът е самостоятелна част от код, която капсулира функционалност и може да бъде използвана
+                        повторно.</p>
+                    <ul>
+                        <li>Позволява организиране на кода.</li>
+                        <li>Намалява зависимостите между различните логически части.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Защо са важни модулите?</h4>
+                    <p>Модулите са основополагащ принцип на съвременната уеб разработка:</p>
+                    <ul>
+                        <li>Подобряват четимостта и поддръжката на кода.</li>
+                        <li>Позволяват лесно споделяне на функционалност между проекти.</li>
+                        <li>Улесняват тестовете и дебъгването.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Пример за модул</h4>
+                    <p>Създаване на прост модул в JavaScript:</p>
+                    <pre><code>// math.js
+export function add(a, b) {
+    return a + b;
+}
+
+export function subtract(a, b) {
+    return a - b;
+}</code></pre>
+                </section>
+
+                <section>
+                    <h4>Използване на модул</h4>
+                    <p>Импортиране и използване на модула:</p>
+                    <pre><code>// main.js
+import { add, subtract } from './math.js';
+
+console.log(add(5, 3)); // 8
+console.log(subtract(5, 3)); // 2
+</code></pre>
+                </section>
+
+                <section>
+                    <h4>История на модулите в JavaScript</h4>
+                    <p>Преди ES6, JavaScript нямаше вградена поддръжка за модули. Разработчиците използваха:</p>
+                    <ul>
+                        <li><strong>Immediately Invoked Function Expressions (IIFE)</strong> за капсулиране.</li>
+                        <li><strong>CommonJS</strong> - популярен стандарт в Node.js.</li>
+                        <li><strong>AMD (Asynchronous Module Definition)</strong> - за асинхронно зареждане на модули.
+                        </li>
+                    </ul>
+                    <p>С ES6 модули стандартът стана част от езика.</p>
+                </section>
+            </section>
+
+            <!-- Типове модули в JavaScript -->
+            <section>
+                <section>
+                    <h4>Типове модули</h4>
+                    <p>JavaScript поддържа различни видове модули в зависимост от средата и стандарта:</p>
+                    <ul>
+                        <li><strong>ES6 модули</strong> (ECMAScript Modules) - използват <code>import</code> и
+                            <code>export</code>.
+                        </li>
+                        <li><strong>CommonJS</strong> - стандарт, използван основно в Node.js.</li>
+                        <li><strong>AMD</strong> (Asynchronous Module Definition) - подходящ за браузърите.</li>
+                        <li><strong>UMD</strong> (Universal Module Definition) - съвместим и с браузъри, и със сървъри.
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>ES6 модули</h4>
+                    <p>ES6 модули са стандартна част от JavaScript и използват:</p>
+                    <ul>
+                        <li><code>export</code> - за експортиране на функции, обекти или примитиви.</li>
+                        <li><code>import</code> - за импортиране на съдържание от други файлове.</li>
+                    </ul>
+                    <pre><code>// example.js
+export function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+// main.js
+import { greet } from './example.js';
+console.log(greet('World')); // Hello, World!</code>
+</pre>
+                </section>
+
+                <section>
+                    <h4>CommonJS</h4>
+                    <p>Използва се в Node.js за модулна система.</p>
+                    <pre><code>// math.js
+module.exports = {
+    add: (a, b) => a + b,
+    subtract: (a, b) => a - b
+};
+
+// main.js
+const math = require('./math');
+console.log(math.add(5, 3)); // 8
+</code></pre>
+                </section>
+
+                <section>
+                    <h4>AMD (Asynchronous Module Definition)</h4>
+                    <p>AMD е модулен формат, който позволява асинхронно зареждане на JavaScript модули:</p>
+                    <ul>
+                        <li>Позволява зареждането на модули само когато са необходими.</li>
+                        <li>По-често се използва с библиотеки като RequireJS.</li>
+                        <li>Поддържа независимост на модулите, като всяка зависимост се зарежда асинхронно.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Пример за използване на AMD с RequireJS:</p>
+                    <pre><code>
+require(['module1', 'module2'], function(module1, module2) {
+    // Вашият код, който използва module1 и module2
+    console.log(module1.someFunction());
+    console.log(module2.someFunction());
+});
+</code></pre>
+                </section>
+
+                <section>
+                    <h4>Universal Module Definition (UMD)</h4>
+                    <p>UMD е модулен формат, съвместим както с браузъри, така и с Node.js:</p>
+                    <ul>
+                        <li>Работи като мост между CommonJS и AMD.</li>
+                        <li>Използва се при библиотеки, които искат да бъдат универсални.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Пример за UMD модул</h4>
+                    <pre><code>(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory); // AMD
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory(); // CommonJS
+    } else {
+        root.myModule = factory(); // Global
+    }
+}(this, function () {
+    return {
+        sayHello: function () {
+            return 'Hello, world!';
+        }
+    };
+}));
+</code></pre>
+                </section>
+            </section>
+
+            <!-- ES6 модули -->
+            <section>
+                <section>
+                    <h4>ES6 модули</h4>
+                    <p>ES6 модулите са стандартна част от JavaScript и се поддържат от всички съвременни браузъри.</p>
+                    <ul>
+                        <li>Поддържат се от Webpack, Rollup и други инструменти.</li>
+                        <li>Позволяват статичен анализ на зависимостите.</li>
+                        <li>Поддържат динамично зареждане на модули.</li>
+                        <li>Изискват използване на <code>type="module"</code> в HTML:</li>
+                    </ul>
+                    <pre><code>&lt;script type="module" src="main.js"&gt;&lt;/script&gt;</code></pre>
+                </section>
+
+                <section>
+                    <h4>Видове експорт</h4>
+                    <p>Има два основни типа експорт:</p>
+                    <ul>
+                        <li><strong>Named Export:</strong> Позволява множество експорти от един файл.</li>
+                        <li><strong>Default Export:</strong> Само един основен експорт от файл.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p>Пример за <strong>Named Export</strong>:</p>
+                    <pre><code>// math.js
+export function add(a, b) { return a + b; }
+export function subtract(a, b) { return a - b; }
+</code></pre>
+                    <p>Пример за <strong>Default Export</strong>:</p>
+                    <pre><code>// logger.js
+export default function log(message) {
+    console.log(message);
+}</code></pre>
+                </section>
+
+                <section>
+                    <h4>Импорт на модули</h4>
+                    <p>Импортирането може да бъде:</p>
+                    <ul>
+                        <li><strong>Импортиране по име:</strong></li>
+                        <pre><code>import { add } from './math.js';</code></pre>
+                        <li><strong>Импортиране на всичко:</strong></li>
+                        <pre><code>import * as math from './math.js';
+console.log(math.add(2, 3));</code></pre>
+                        <li><strong>Default импорт:</strong></li>
+                        <pre><code>import log from './logger.js';
+log('Hello, World!');</code></pre>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Характеристики на ES6 модулите</h4>
+                    <ul>
+                        <li>Модулите са винаги изпълнявани в strict mode (<code>'use strict'</code>).</li>
+                        <li>Всеки модул има свой собствен scope.</li>
+                        <li>Модулите се изпълняват само веднъж (singleton).</li>
+                        <li>Могат да използват <code>import.meta</code> за достъп до метаинформация.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Предимства на ES6 модулите</h4>
+                    <ul>
+                        <li>По-добра организация и структура на кода.</li>
+                        <li>Позволяват tree shaking за намаляване на размера на бъндъла.</li>
+                        <li>Съвместими с браузъри и Node.js (с адаптации).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Ограничения на ES6 модулите</h4>
+                    <ul>
+                        <li>Изискват поддръжка от браузъра (или трансформация чрез инструменти като Babel).</li>
+                        <li>Не могат да бъдат използвани директно без <code>type="module"</code>.</li>
+                        <li>Имената на файловете трябва да са с абсолютни или относителни пътища.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Динамичен импорт -->
+            <section>
+                <section>
+                    <h4>Какво е динамичен импорт?</h4>
+                    <p><strong>Динамичният импорт</strong> е начин за зареждане на модули по време на изпълнение, вместо
+                        при зареждане на страницата.</p>
+                    <p>Синтаксис:</p>
+                    <pre><code>import('./module.js')
+    .then(module => {
+        module.someFunction();
+    })
+    .catch(err => {
+        console.error('Грешка при зареждане на модула:', err);
+    });
+</code></pre>
+                    <ul>
+                        <li>Зарежда модули асинхронно.</li>
+                        <li>Връща <code>Promise</code>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Предимства на динамичния импорт</h4>
+                    <ul>
+                        <li>Намалява времето за първоначално зареждане на приложението (по-малки бъндъли).</li>
+                        <li>Позволява зареждане на модули само когато са необходими.</li>
+                        <li>Полезен за lazy loading на компоненти.</li>
+                        <li>Позволява условно зареждане на модули:</li>
+                        <pre><code>if (condition) {
+    import('./feature.js').then(module => module.init());
+}</code></pre>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Пример за динамичен импорт</h4>
+                    <p>Сценарий: Зареждане на библиотека само при нужда.</p>
+                    <pre><code>// index.js
+document.getElementById('loadChart').addEventListener('click', async () => {
+    const { drawChart } = await import('./chart.js');
+    drawChart();
+});
+
+// chart.js
+export function drawChart() {
+    console.log('Графиката е нарисувана!');
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h4>Практически приложения</h4>
+                    <ul>
+                        <li><strong>Lazy loading</strong> на JavaScript код за по-добра производителност.</li>
+                        <li><strong>Условно зареждане</strong> на функционалности, базирани на потребителски действия.
+                        </li>
+                        <li><strong>Code splitting</strong> за намаляване на размера на основния бъндъл.</li>
+                        <li><strong>Динамично зареждане на зависимости</strong> в големи проекти.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Ограничения и съвети</h4>
+                    <ul>
+                        <li>Работи само с ES6 модули.</li>
+                        <li>Може да усложни дебъгването, ако не е добре организиран.</li>
+                        <li>Използвайте го разумно, за да избегнете фрагментиран код.</li>
+                        <li>Може да се комбинира с инструменти като Webpack за оптимизация.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Сравнение с CommonJS -->
+            <section>
+                <section>
+                    <h4>Какво е CommonJS?</h4>
+                    <p>CommonJS е модулна система, разработена за JavaScript преди ES6 модулите.</p>
+                    <ul>
+                        <li>Използва се основно в Node.js.</li>
+                        <li>Дефинира стандарти за импортиране и експортиране на модули.</li>
+                    </ul>
+                    <pre><code>// CommonJS пример
+// math.js
+exports.add = function(a, b) {
+    return a + b;
+};
+
+// main.js
+const math = require('./math');
+console.log(math.add(2, 3)); // 5
+</code></pre>
+                </section>
+
+                <section>
+                    <h4>ES6 модули срещу CommonJS</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Аспект</th>
+                                <th>ES6 модули</th>
+                                <th>CommonJS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Синтаксис</td>
+                                <td>import/export</td>
+                                <td>require/module.exports</td>
+                            </tr>
+                            <tr>
+                                <td>Асинхронност</td>
+                                <td>Асинхронно</td>
+                                <td>Синхронно</td>
+                            </tr>
+                            <tr>
+                                <td>Изпълнение</td>
+                                <td>Работи в браузъра и Node.js</td>
+                                <td>Основно за Node.js</td>
+                            </tr>
+                            <tr>
+                                <td>Динамичен импорт</td>
+                                <td>Поддържа <code>import()</code></td>
+                                <td>Не се поддържа</td>
+                            </tr>
+                            <tr>
+                                <td>Tree shaking</td>
+                                <td>Да</td>
+                                <td>Не</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h4>Практически съвети</h4>
+                    <ul>
+                        <li>Използвайте ES6 модули за нови проекти, когато е възможно.</li>
+                        <li>CommonJS остава полезен за съществуващи Node.js приложения.</li>
+                        <li>Комбинирайте системите внимателно, ако проектът ви изисква това.</li>
+                        <li>Webpack и Babel могат да помогнат за съвместимост между модулни системи.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Заключение и препоръки -->
+            <section>
+                <section>
+                    <h5>Препоръки</h5>
+                    <ul>
+                        <li><strong>Създавайте малки, самостоятелни модули:</strong> Поддържайте модулите малки и с ясно
+                            дефинирана функционалност, за да улесните управлението и поддръжката на кода.</li>
+                        <li><strong>Използвайте стандарта ES6:</strong> Когато е възможно, предпочитайте ES6 модули пред
+                            по-старите стандарти (напр. CommonJS), тъй като те предлагат по-добра производителност и
+                            съвместимост.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h5>Препоръки</h5>
+                    <ul>
+                        <li><strong>Използвайте динамичния импорт разумно:</strong> Динамичният импорт е мощен
+                            инструмент,
+                            но може да усложни кода, ако не се използва правилно. Използвайте го за lazy loading и
+                            оптимизация на производителността.</li>
+                        <li><strong>Тествайте модулите:</strong> Уверете се, че модулите ви са добре тествани и
+                            документирани, за да гарантирате правилното им функциониране.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Благодаря за вниманието!</h4>
+                    <p>Имате ли въпроси?</p>
+                    <p>Можете да се свържете с мен за допълнителна информация:</p>
+                    <ul>
+                        <li><strong>Email:</strong> konstantin.gogov@icloud.com</li>
+                        <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/konstantin-gogov/"
+                                target="_blank">Konstantin
+                                Gogov</a>
+                        </li>
+                    </ul>
+                    <p><strong>Вдъхновението идва от вас – продължавайте да учите и експериментирате!</strong></p>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script type="module">
+        import Reveal from './node_modules/reveal.js/dist/reveal.esm.js';
+        import Highlight from './node_modules/reveal.js/plugin/highlight/highlight.esm.js';
+        import CopyCode from './node_modules/reveal.js-copycode/plugin/copycode/copycode.esm.js';
+
+        Reveal.initialize({
+            hash: true,
+            history: true,
+            plugins: [Highlight, CopyCode],
+            progress: true,
+        });
+    </script>
+</body>
+
+</html>
